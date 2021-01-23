@@ -1,0 +1,68 @@
+.grid {
+    margin: 10px 0 40px 0;
+    display: inline-block;
+}
+
+.labels { 
+    display: inline-block;
+}
+
+.footer {
+    font-style: italic;
+}
+
+.remaining-text {
+    color: rgb(175, 175, 175);
+}
+
+.input-container {
+    margin: 0px auto;
+    padding: 50px 0 20px 0;
+    width: 660px;
+    text-align: left;
+}
+
+label {
+    display: inline;
+    font: 1rem 'Fira Sans', sans-serif;
+}
+
+input,
+label {
+    margin: .4rem .5rem;
+}
+
+span::after {
+    padding-left: 2px;
+}
+
+input:invalid+span::after {
+    content: '✖';
+}
+
+input:valid+span::after {
+    content: '✓';
+}
+
+h1 { 
+    display: block;
+    margin: 0px auto;
+    padding-top: 10px;
+    width: 650px;
+    text-align: left;
+    font-size: 40px;
+}
+
+h2, button { 
+    display: inline;
+}
+
+button { 
+    margin-left: 10px;
+}
+
+hr { 
+    width: 480px;
+    border-top: 2px dotted rgb(175, 175, 175);
+    margin: 10px;
+}
