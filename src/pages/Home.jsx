@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../styles/Home.css';
 import GridNode from '../components/GridNode';
 import LabelNode from '../components/LabelNode';
-import { getPassedWeeks } from '../helpers/helper';
+import { getPassedWeeks } from '../helpers/helper-functions';
 
 class Home extends Component {
     state = {

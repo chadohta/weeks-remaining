@@ -3,9 +3,7 @@ import '../styles/GridNode.css'
 
 class GridNode extends Component {
     render() { 
-        const { col, 
-                row, 
-            } = this.props;
+        const { col, row } = this.props;
         
         return ( 
             <div
