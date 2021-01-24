@@ -12,7 +12,5 @@ Inspired by: [4kweeks](https://4kweeks.com/)
 
 ## Technologies Used
 
-* React
-* Moment.js
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+* [React](https://github.com/facebook/create-react-app)
+* [Moment.js](https://momentjs.com/)
