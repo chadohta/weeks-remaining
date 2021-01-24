@@ -179,7 +179,7 @@ class Home extends Component {
                     </div>
                 </div>
 
-                <p className="footer"> ** Weeks remaining is based on the average human life span of 80 years </p>
+                <p className="footer"> ** Weeks remaining is based on the average human life span of 79 years (rounded to 80). </p>
 
             </div>
         );
