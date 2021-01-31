@@ -2,23 +2,26 @@ import React, { Component } from 'react';
 import '../styles/Home.css';
 import GridNode from '../components/GridNode';
 import LabelNode from '../components/LabelNode';
-import { getPassedWeeks } from '../helpers/helper-functions';
+import { getPassedWeeks, validateUserInput } from '../helpers/helper-functions';
 
 class Home extends Component {
     state = {
         grid: [],
         labels: [],
-        weeksRemaining: 4160, // 80 years * 52 weeks per year
+        weeksRemaining: 4160, // default = 80 years * 52 weeks per year
+        predictedLifeSpan: 80,
     }
 
     componentDidMount() {
-        this.createWeekLabels();
-        this.createGrid();
+        let defaultLifeSpan = 80;
+        this.createWeekLabels(defaultLifeSpan);
+        this.createGrid(defaultLifeSpan);
+        this.resetWeeksRemainingCount(defaultLifeSpan);
     }
 
-    createWeekLabels() { 
+    createWeekLabels(years) { 
         const labels = [];
-        for (let row = 0; row < 80; row++) {
+        for (let row = 0; row < years; row++) {
             const currentRow = [];
             for (let col = 0; col < 1; col++) {
                 currentRow.push(this.createLabel(col, row));
@@ -39,9 +42,9 @@ class Home extends Component {
         };
     }
 
-    createGrid() {
+    createGrid(years) {
         const grid = [];
-        for (let row = 0; row < 80; row++) {
+        for (let row = 0; row < years; row++) {
             const currentRow = [];
             for (let col = 0; col < 52; col++) {
                 currentRow.push(this.createNode(col, row));
@@ -75,15 +78,21 @@ class Home extends Component {
         }
     }
 
-    resetWeeksRemainingCount() { 
+    resetWeeksRemainingCount(years) { 
         this.setState({
-            weeksRemaining: 4160,
+            weeksRemaining: years * 52,
         });
     }
 
-    setWeeksRemainingCount(n) { 
+    setWeeksRemainingCount(years, n) { 
         this.setState({
-            weeksRemaining: 4160 - n,
+            weeksRemaining: years * 52 - n,
+        });
+    }
+
+    updatePredictedLifeSpan(lifeSpan) { 
+        this.setState({
+            predictedLifeSpan: lifeSpan,
         });
     }
 
@@ -96,17 +105,33 @@ class Home extends Component {
 
     handleBirthdaySubmit() { 
         this.toggleButtons(true);
-        this.resetGrid();
-        this.resetWeeksRemainingCount();
+        const { grid, predictedLifeSpan } = this.state;
 
+        const lifeSpan = document.getElementById('lifeSpan').value;
         const birthday = document.getElementById('birthday').value; // YYYY-MM-DD string
         const dateParts = birthday.split('-');
         const bday = dateParts[1] + "/" + dateParts[2] + "/" + dateParts[0]; // MM/DD/YYYY string
+        
+        // validate user input first, returns if invalid
+        if (!validateUserInput(bday, lifeSpan)) {
+            this.toggleButtons(false);
+            return;
+        }
 
-        const { grid } = this.state;
+        // if user changes the predicated life span remake the grid
+        if (lifeSpan !== predictedLifeSpan) { 
+            this.createWeekLabels(lifeSpan);
+            this.createGrid(lifeSpan);
+            this.updatePredictedLifeSpan(lifeSpan);
+            setTimeout(() => { this.resetGrid(); }, 500); // make sure state is updated with new grid
+        } else { 
+            this.resetGrid();
+        }
+        this.resetWeeksRemainingCount(lifeSpan);
+
         const weeksPassed = getPassedWeeks(grid, bday);
-        this.animateExploration(weeksPassed);
-        this.setWeeksRemainingCount(weeksPassed.length);
+        setTimeout(() => { this.animateExploration(weeksPassed); }, 1000); // make sure grid is reset first 
+        this.setWeeksRemainingCount(lifeSpan, weeksPassed.length);
     }
 
     animateExploration(weeksPassed) {
@@ -128,11 +153,16 @@ class Home extends Component {
         return ( 
             <div>
                 <div className="input-container">
-                    <label>
-                        <h2> Enter Your Birthday: </h2>
-                        <input type="date" id="birthday" defaultValue="1990-01-01" min="1900-01-01" max="2020-12-31" required/>
+                    <div>
+                        <label for="bday"> <h2> Enter Your Birthday: </h2> </label>
+                        <input type="date" id="birthday" name="bday" defaultValue="1990-01-01" min="1900-01-01" max="2020-12-31" required/>
                         <span className="validity"></span>
-                    </label>
+                    </div>
+                    <div>
+                        <label for="predictedLifeSpan"> <h3> Predicted Life Span (in years): </h3> </label>
+                        <input type="number" id="lifeSpan" name="predictedLifeSpan" min="1" max="123" defaultValue="80" step="1" required/>
+                        <span className="validity"></span>
+                    </div>
                     <button className="birthdaySubmit" onClick={() => this.handleBirthdaySubmit()}> Submit </button>
                     <hr/>
                 </div>
@@ -179,7 +209,7 @@ class Home extends Component {
                     </div>
                 </div>
 
-                <p className="footer"> ** Weeks remaining is based on the average human life span of 79 years (rounded to 80). </p>
+                <p className="footer"> ** Default life span is based on the average human life span of 79 years (rounded to 80). </p>
 
             </div>
         );
