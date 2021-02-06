@@ -1,8 +1,10 @@
 # Weeks Remaining
 
+![homepage](./weeks-remaining.png)
+
 ## Description
 
-This application visualizes a user's life in weeks.  
+This application visualizes your life in weeks.  
 
 You can find it here: <https://chadohta.github.io/weeks-remaining/>
 
