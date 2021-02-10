@@ -151,7 +151,7 @@ class Home extends Component {
         const { grid, labels, weeksRemaining } = this.state;
 
         return ( 
-            <div>
+            <div id="home">
                 <div className="input-container">
                     <div>
                         <label for="bday"> <h2> Enter Your Birthday: </h2> </label>

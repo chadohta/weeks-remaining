@@ -1,5 +1,14 @@
+#home { 
+    width: 100%;
+    margin: auto;
+}
+
+.container { 
+    margin: auto;
+}
+
 .grid {
-    margin: 10px 0 40px 0;
+    margin: 10px auto 40px auto;
     display: inline-block;
 }
 
@@ -73,4 +82,10 @@ hr {
     width: 480px;
     border-top: 2px dotted rgb(175, 175, 175);
     margin: 8px;
+}
+
+@media screen and (max-width: 500px) {
+    hr { 
+        width: 380px;
+    }
 }
