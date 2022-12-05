@@ -4,7 +4,6 @@ import '../styles/LabelNode.css'
 class LabelNode extends Component {
     render() { 
         const { col, row, hide } = this.props;
-    
         const extraClassName = hide ? 'label-hide' : '';
         
         return ( 
