@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import ScreenTooSmallErrorPage from "./components/ScreenTooSmallErrorPage";
+import ScreenTooSmallErrorPage from "./pages/ScreenTooSmallErrorPage";
 import Home from "./pages/Home";
 import "./App.css";
 
